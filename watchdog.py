@@ -64,6 +64,10 @@ def new_message_handler(update):
     # Maybe we can whitelist sender_id instead of chat_id, but I think it doesn't make a difference.
 
     if is_outgoing:
+        if message_text == 'whitelist' or message_text == '/start':
+            whitelisted_chat_ids.append(chat_id)
+            write_whitelist_to_disk(whitelist_filename)
+            tg.send_message(chat_id=chat_id, text='[Telegram Antispam Watchdog] This chat has been whitelisted.')
         return
     if chat_id < 0 or chat_id == 777000:
         return
