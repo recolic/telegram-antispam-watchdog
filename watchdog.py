@@ -9,6 +9,7 @@ tg = Telegram(
     api_hash='11111111111111111111111111111111111111111',
     phone='+15012212221',
     database_encryption_key='any_password',
+    files_directory='tdlib_files/',
 )
 whitelist_filename = 'whitelisted_chats.log'
 ##################### Configuration End ########################
