@@ -72,7 +72,7 @@ def new_message_handler(update):
         if not message_text.startswith('This account is protected by Telegram Antispam WatchDog.'):
             whitelisted_chat_ids.append(chat_id)
             write_whitelist_to_disk(whitelist_filename)
-            tg.send_message(chat_id=chat_id, text='[Telegram Antispam Watchdog] This chat is whitelisted.')
+            tg.send_message(chat_id=chat_id, text='[Telegram Antispam Watchdog] Whitelisted this chat.')
         return
 
     print("DEBUG: Received a new private chat message which needs verification, chat_id=", chat_id)
