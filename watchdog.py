@@ -60,11 +60,12 @@ def new_message_handler(update):
     # 1. Incoming
     # 2. Not from group chat (Personal chat)
     # 3. chat_id is not in whitelist
+    # 4. chat_id is not 777000 (Telegram official notification)
     # Maybe we can whitelist sender_id instead of chat_id, but I think it doesn't make a difference.
 
     if is_outgoing:
         return
-    if chat_id < 0:
+    if chat_id < 0 || chat_id == 777000:
         return
     if chat_id in whitelisted_chat_ids:
         return
