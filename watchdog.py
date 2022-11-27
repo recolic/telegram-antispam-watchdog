@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from telegram.client import Telegram
 
 ##################### Configuration Begin ######################
@@ -82,7 +83,7 @@ def new_message_handler(update):
     else:
         # Answer is not correct: send verification message and delete his message.
         print("DEBUG: bad answer")
-        tg.send_message(chat_id=chat_id, text='This account is protected by Telegram Antispam WatchDog. Please answer the question to continue: ' + YOUR_QUESTION)
+        tg.send_message(chat_id=chat_id, text='This account is protected by Telegram Antispam WatchDog.\nPlease answer the question to continue:\n请正确回答以下问题:\n\n' + YOUR_QUESTION)
         tg.delete_messages(chat_id, [msg_id])
 
 if __name__ == "__main__":
