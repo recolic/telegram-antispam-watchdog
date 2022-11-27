@@ -63,18 +63,19 @@ def new_message_handler(update):
     # 4. chat_id is not 777000 (Telegram official notification)
     # Maybe we can whitelist sender_id instead of chat_id, but I think it doesn't make a difference.
 
-    if is_outgoing:
-        if message_text == 'whitelist' or message_text == '/start':
-            whitelisted_chat_ids.append(chat_id)
-            write_whitelist_to_disk(whitelist_filename)
-            tg.send_message(chat_id=chat_id, text='[Telegram Antispam Watchdog] This chat has been whitelisted.')
-        return
     if chat_id < 0 or chat_id == 777000:
         return
     if chat_id in whitelisted_chat_ids:
         return
+    if is_outgoing:
+        # Send any outgoing message to add unknown chat to whitelist.
+        if not message_text.startswith('This account is protected by Telegram Antispam WatchDog.'):
+            whitelisted_chat_ids.append(chat_id)
+            write_whitelist_to_disk(whitelist_filename)
+            tg.send_message(chat_id=chat_id, text='[Telegram Antispam Watchdog] This chat is whitelisted.')
+        return
 
-    print("DEBUG: Received a new private chat message which needs verification.")
+    print("DEBUG: Received a new private chat message which needs verification, chat_id=", chat_id)
 
     # Mark as read to suppress the notification.
     mark_msg_read(chat_id, msg_id)
