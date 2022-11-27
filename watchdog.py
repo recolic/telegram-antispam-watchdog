@@ -65,7 +65,7 @@ def new_message_handler(update):
 
     if is_outgoing:
         return
-    if chat_id < 0 || chat_id == 777000:
+    if chat_id < 0 or chat_id == 777000:
         return
     if chat_id in whitelisted_chat_ids:
         return
