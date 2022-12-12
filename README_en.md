@@ -1,6 +1,6 @@
 # Telegram AntiSpam Watchdog
 
-Automatically block all telegram spam bot for you!
+Automatically block telegram private message spammer for you!
 
 [Chinese Version](README.md)
 
