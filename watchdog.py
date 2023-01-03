@@ -12,7 +12,6 @@ tg = Telegram(
     database_encryption_key='any_password',
     files_directory='tdlib_files/',
 )
-aggresive_mode = True # Delete the chat on your side after sending verification message. The reason is `mark_msg_read()` cannot always eliminate the notification successfully.
 ##################### Configuration End ########################
 
 whitelist_filename = 'whitelisted_chats.log'
