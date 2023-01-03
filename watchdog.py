@@ -11,10 +11,15 @@ tg = Telegram(
     database_encryption_key='any_password',
     files_directory='tdlib_files/',
 )
-whitelist_filename = 'whitelisted_chats.log'
+aggresive_mode = True # Delete the chat on your side after sending verification message. The reason is `mark_msg_read()` cannot always eliminate the notification successfully.
 ##################### Configuration End ########################
 
+whitelist_filename = 'whitelisted_chats.log'
 whitelisted_chat_ids = []
+
+magic_text = 'tqYH5C'
+msg_verify = 'This account is protected by Telegram Antispam WatchDog.\nPlease answer the question to continue:\n请正确回答以下问题:\n\n' + YOUR_QUESTION
+msg_whitelisted = '[Telegram Antispam Watchdog] Whitelisted this chat.'
 
 def read_whitelist_from_disk(fname):
     try:
@@ -50,6 +55,18 @@ def mark_msg_read(chat_id, msg_id):
     }
     tg._tdjson.send(fn_data)
 
+    if aggresive_mode:
+        print("aggresive: fucking things")
+        fn_data = {
+            '@type': 'viewMessages',
+            'chat_id': chat_id,
+            'message_ids': [msg_id],
+            'force_read': True,
+        }
+        tg._tdjson.send(fn_data)
+
+
+
 def new_message_handler(update):
     chat_id = update['message']['chat_id']
     msg_id = update['message']['id']
@@ -69,11 +86,11 @@ def new_message_handler(update):
     if chat_id in whitelisted_chat_ids:
         return
     if is_outgoing:
-        # Send any outgoing message to add unknown chat to whitelist.
-        if not message_text.startswith('This account is protected by Telegram Antispam WatchDog.'):
+        # Send any outgoing message to add unknown chat to whitelist. (Except verification message)
+        if magic_text not in message_text:
             whitelisted_chat_ids.append(chat_id)
             write_whitelist_to_disk(whitelist_filename)
-            tg.send_message(chat_id=chat_id, text='[Telegram Antispam Watchdog] Whitelisted this chat.')
+            tg.send_message(chat_id=chat_id, text=msg_whitelisted)
         return
 
     print("DEBUG: Received a new private chat message which needs verification, chat_id=", chat_id)
@@ -90,7 +107,7 @@ def new_message_handler(update):
     else:
         # Answer is not correct: send verification message and delete his message.
         print("DEBUG: bad answer")
-        tg.send_message(chat_id=chat_id, text='This account is protected by Telegram Antispam WatchDog.\nPlease answer the question to continue:\n请正确回答以下问题:\n\n' + YOUR_QUESTION)
+        tg.send_message(chat_id=chat_id, text=msg_verify)
         tg.delete_messages(chat_id, [msg_id])
 
 if __name__ == "__main__":
