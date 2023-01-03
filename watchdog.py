@@ -1,6 +1,6 @@
 #!/usr/bin/python3 -u
 from telegram.client import Telegram
-import threading, time
+import threading, time, os
 
 ##################### Configuration Begin ######################
 YOUR_QUESTION = '12 + 17 = ?'
@@ -146,4 +146,5 @@ if __name__ == "__main__":
     tg.idle()  # blocking waiting for CTRL+C
     tg.stop()  # you must call `stop` at the end of the script
     print("Exited")
+    os._exit(0)
 
