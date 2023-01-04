@@ -1,18 +1,23 @@
 #!/usr/bin/python3 -u
+
+##################### Configuration Begin ######################
+YOUR_QUESTION = '12 + 16 = ?'
+YOUR_ANSWER = '28'
+TELEGRAM_API_ID = '11111111' # Get api_id and api_hash at my.telegram.org
+TELEGRAM_API_HASH = '67e72cc9e2b603e08d05446ad5ef8e6'
+TELEGRAM_PHONE = '+12223334444' # Phone number in International Format. Example: '+8617719890604'
+##################### Configuration End ########################
+
 from telegram.client import Telegram
 import threading, time, os
 
-##################### Configuration Begin ######################
-YOUR_QUESTION = '12 + 17 = ?'
-YOUR_ANSWER = '29'
 tg = Telegram(
-    api_id='11111111', # Get api_id and api_hash at my.telegram.org
-    api_hash='c70111111111111111111111111111b5',
-    phone='+13331112222',
+    api_id=TELEGRAM_API_ID, 
+    api_hash=TELEGRAM_API_HASH,
+    phone=TELEGRAM_PHONE,
     database_encryption_key='any_password',
     files_directory='tdlib_files/',
 )
-##################### Configuration End ########################
 
 whitelist_filename = 'whitelisted_chats.log'
 whitelisted_chat_ids = []
@@ -20,6 +25,7 @@ whitelisted_chat_ids = []
 magic_text = '[tqYH5C]'
 msg_verify = 'This account is protected by Telegram Antispam WatchDog.\nPlease answer the question to continue:\n请正确回答以下问题:\n\n' + YOUR_QUESTION
 msg_whitelisted = '[Telegram Antispam Watchdog] Whitelisted this chat.'
+msg_passed = 'You have passed the verification. Thanks!\n你已经通过验证, 感谢你的理解!'
 
 # We need to mark_message_read() for 30 times, with one second interval. That's the only method to eliminate GMS notification.
 # Format: [(chat_id, msg_id, count), ...]
@@ -115,7 +121,7 @@ def new_message_handler(update):
         print("DEBUG: good answer")
         whitelisted_chat_ids.append(chat_id)
         write_whitelist_to_disk(whitelist_filename)
-        tg.send_message(chat_id=chat_id, text='You have passed the verification. Thanks.')
+        tg.send_message(chat_id=chat_id, text=msg_passed)
     else:
         # Answer is not correct: send verification message and delete his message.
         print("DEBUG: bad answer")

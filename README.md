@@ -28,13 +28,9 @@ sudo pip3 install python-telegram
 ```
 YOUR_QUESTION = '在这里写上你想问的验证问题'
 YOUR_ANSWER = '在这里写上正确的答案'
-tg = Telegram(
-    api_id='在这里写上你的api_id',
-    api_hash='在这里写上那一串长长的api_hash',
-    phone='在这里写上你的Telegram帐号的手机号码',
-    database_encryption_key='any_password',
-)
-whitelist_filename = 'whitelisted_chats.log'
+TELEGRAM_API_ID ='在这里写上你的api_id',
+TELEGRAM_API_HASH ='在这里写上那一串长长的api_hash',
+TELEGRAM_PHONE ='在这里写上你的Telegram帐号的手机号码',
 ```
 
 然后您只需要24小时运行刚刚放入伺服器的`watchdog.py`, 就可以了. 注意, 第一次登陆时程序会提示您输入登陆验证码. 

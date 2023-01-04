@@ -28,13 +28,9 @@ And then copy the `watchdog.py` onto your device. Modify the following lines at 
 ```
 YOUR_QUESTION = 'Your verification question here'
 YOUR_ANSWER = 'Your expected answer here'
-tg = Telegram(
-    api_id='change this!',
-    api_hash='change this!',
-    phone='Phone number of your telegram account',
-    database_encryption_key='any_password',
-)
-whitelist_filename = 'whitelisted_chats.log'
+TELEGRAM_API_ID = 'Change This!'
+TELEGRAM_API_HASH = 'Change This!'
+TELEGRAM_PHONE = 'Phone number of your telegram account'
 ```
 
 Now you just need to run the modified `watchdog.py` 24 hours a day. Note that you need to input the SMS code on the first login.
