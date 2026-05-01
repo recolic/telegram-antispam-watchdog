@@ -2,7 +2,7 @@
 
 阻止Telegram的私聊骚扰.
 
-[For English README, click Here](README_en.md)
+[For English README, click Here](README_en.md) ; [作为插件使用? 点击这里](https://github.com/recolic/telegram-userbot-frame/blob/master/example_modules/mod_antispam_watchdog.py)
 
 ## 此程序会做什么
 

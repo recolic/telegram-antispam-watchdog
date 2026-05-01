@@ -2,7 +2,7 @@
 
 Automatically block telegram private message spammer for you!
 
-[Chinese Version](README.md)
+[Chinese Version](README.md) ; [Use as plugin? click here](https://github.com/recolic/telegram-userbot-frame/blob/master/example_modules/mod_antispam_watchdog.py)
 
 ## What does this program do
 
